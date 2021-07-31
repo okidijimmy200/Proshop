@@ -2,6 +2,7 @@ import express from 'express'
 import connectDB  from './config/db.js'
 import colors from 'colors'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 import { errorHandler, notFound,  } from './middleware/errors.middleware.js'
 import productRoutes from './routes/product.routes.js'
@@ -13,6 +14,9 @@ dotenv.config({path: './config.env'})
 connectDB()
 
 const app = express()
+
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors())
 
 // body parser to help us accept JSON data in the body
 app.use(express.json())

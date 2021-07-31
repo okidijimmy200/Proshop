@@ -81,5 +81,38 @@ const getUserProfile = asyncHandler(async(req, res) => {
       res.send('Success')
 }) 
 
+// @access --Private
+const updateUserProfile = asyncHandler(async(req, res) => {
 
-export { authUser, getUserProfile, registerUser }
+    // find user
+    const user = await User.findById(req.user._id)
+
+    // check for user
+    if(user) {
+      user.name = req.body.name || user.name
+      user.email = req.body.email || user.email
+      if (req.body.password) {
+          user.password = req.body.password
+      }
+      const updateUser = await user.save()
+
+      res.json({
+        _id: updateUser ._id,
+        name: updateUser .name,
+        email: updateUser .email,
+        isAdmin: updateUser .isAdmin,
+        token: generateToken(updateUser._id) //token with user id embedded in 
+    })
+    }
+    else {
+        res.status(404)
+        throw new Error('User not found')
+    }
+
+    // check if the user exists
+      res.send('Success')
+}) 
+
+
+
+export { authUser, getUserProfile, registerUser, updateUserProfile }
