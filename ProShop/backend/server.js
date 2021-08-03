@@ -7,6 +7,7 @@ import cors from 'cors'
 import { errorHandler, notFound,  } from './middleware/errors.middleware.js'
 import productRoutes from './routes/product.routes.js'
 import userRoutes from './routes/user.routes.js'
+import orderRoutes from './routes/order.routes.js'
 
 
 dotenv.config({path: './config.env'})
@@ -29,6 +30,8 @@ app.get('/', (req, res) => {
 app.use('/api/products', productRoutes)
 
 app.use('/api/users', userRoutes)
+
+app.use('/api/orders', orderRoutes)
 
 // fallback for 404 errors
 app.use(notFound)
