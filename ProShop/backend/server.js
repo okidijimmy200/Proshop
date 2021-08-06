@@ -1,4 +1,5 @@
 import express from 'express'
+import path from 'path'
 import connectDB  from './config/db.js'
 import colors from 'colors'
 import dotenv from 'dotenv'
@@ -8,6 +9,7 @@ import { errorHandler, notFound,  } from './middleware/errors.middleware.js'
 import productRoutes from './routes/product.routes.js'
 import userRoutes from './routes/user.routes.js'
 import orderRoutes from './routes/order.routes.js'
+import uploadRoutes from './routes/upload.routes.js'
 
 
 dotenv.config({path: './config.env'})
@@ -33,6 +35,10 @@ app.use('/api/users', userRoutes)
 
 app.use('/api/orders', orderRoutes)
 
+app.use('/api/upload', uploadRoutes)
+
+const CURRENT_WORKING_DIR = process.cwd()
+app.use('/uploads', express.static(path.join(CURRENT_WORKING_DIR, 'uploads')))
 // fallback for 404 errors
 app.use(notFound)
 
